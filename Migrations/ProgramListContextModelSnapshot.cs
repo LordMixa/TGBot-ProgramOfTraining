@@ -39,6 +39,29 @@ namespace Teleg_training.Migrations
                     b.ToTable("Authors");
                 });
 
+            modelBuilder.Entity("Teleg_training.DBEntities.DBLike", b =>
+                {
+                    b.Property<int>("LikeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LikeId"));
+
+                    b.Property<int>("ProgramListId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TGId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("LikeId");
+
+                    b.HasIndex("ProgramListId");
+
+                    b.HasIndex("TGId");
+
+                    b.ToTable("DBLikes");
+                });
+
             modelBuilder.Entity("Teleg_training.DBEntities.DBProduct", b =>
                 {
                     b.Property<int>("ProductId")
@@ -54,7 +77,6 @@ namespace Teleg_training.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Fats")
@@ -94,19 +116,14 @@ namespace Teleg_training.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Likes")
-                        .HasColumnType("int");
-
                     b.Property<string>("Mode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Program")
                         .HasColumnType("nvarchar(max)");
@@ -115,7 +132,49 @@ namespace Teleg_training.Migrations
 
                     b.HasIndex("AuthorId");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("ProgramLists");
+                });
+
+            modelBuilder.Entity("Teleg_training.DBEntities.DBUser", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TGId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("DBUsers");
+                });
+
+            modelBuilder.Entity("Teleg_training.DBEntities.DBLike", b =>
+                {
+                    b.HasOne("Teleg_training.DBEntities.DBProgramList", "ProgramList")
+                        .WithMany("Likes")
+                        .HasForeignKey("ProgramListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Teleg_training.DBEntities.DBUser", "User")
+                        .WithMany("Likes")
+                        .HasForeignKey("TGId")
+                        .HasPrincipalKey("TGId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProgramList");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Teleg_training.DBEntities.DBProgramList", b =>
@@ -132,6 +191,16 @@ namespace Teleg_training.Migrations
             modelBuilder.Entity("Teleg_training.DBEntities.DBAuthor", b =>
                 {
                     b.Navigation("ProgramLists");
+                });
+
+            modelBuilder.Entity("Teleg_training.DBEntities.DBProgramList", b =>
+                {
+                    b.Navigation("Likes");
+                });
+
+            modelBuilder.Entity("Teleg_training.DBEntities.DBUser", b =>
+                {
+                    b.Navigation("Likes");
                 });
 #pragma warning restore 612, 618
         }

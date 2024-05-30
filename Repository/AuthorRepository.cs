@@ -8,17 +8,16 @@ using Teleg_training.DBEntities;
 
 namespace Teleg_training.Repository
 {
-    public class AuthorRepository : IRepository<DBAuthor>,IDisposable
+    public class AuthorRepository : IRepository<DBAuthor>
     {
         public readonly DbSet<DBAuthor> _authorSet;
-        private ProgramListContext _context;
-        private bool disposed = false;
-        public AuthorRepository(ProgramListContext programListContext)
+        public readonly UnitOfWork _unitOfWork;
+        public AuthorRepository(UnitOfWork unitOfWork)
         {
-            _context = programListContext;
-            _authorSet = programListContext.Authors;
+            _unitOfWork = unitOfWork;
+            _authorSet = _unitOfWork.Context.Set<DBAuthor>();
         }
-        DBAuthor IRepository<DBAuthor>.Get(int id)
+        DBAuthor ?IRepository<DBAuthor>.Get(int id)
         {
             return _authorSet.Find(id);
         }
@@ -28,7 +27,7 @@ namespace Teleg_training.Repository
             throw new NotImplementedException();
         }
 
-        void IRepository<DBAuthor>.Update(int id, DBAuthor item)
+        void IRepository<DBAuthor>.Update( DBAuthor item)
         {
             throw new NotImplementedException();
         }
@@ -42,22 +41,9 @@ namespace Teleg_training.Repository
         {
             return _authorSet;
         }
-        public virtual void Dispose(bool disposing)
+        public async Task<List<DBAuthor>> GetAllAsync()
         {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    _context.Dispose();
-                }
-                this.disposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            return await _authorSet.ToListAsync();
         }
     }
 }

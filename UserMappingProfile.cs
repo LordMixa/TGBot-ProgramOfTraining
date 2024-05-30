@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Teleg_training.DBEntities;
+using Teleg_training.Models;
 
 namespace Teleg_training
 {
@@ -18,7 +19,7 @@ namespace Teleg_training
                 //.ForMember(dest => dest.CodeName, opt => opt.MapFrom(src => $"{src.Author.Name}-{src.ProgramId}"))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Difficult, opt => opt.MapFrom(src => src.Difficult))
-                .ForMember(dest => dest.Likes, opt => opt.MapFrom(src => src.Likes))
+                .ForMember(dest => dest.Likes, opt => opt.MapFrom(src => src.Likes.Count))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender))
                 .ForMember(dest => dest.Mode, opt => opt.MapFrom(src => src.Mode))

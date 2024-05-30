@@ -20,6 +20,6 @@ namespace Teleg_training.DBEntities
         public double Fats { get; set; }
         public double Carbohydrates { get; set; }
         public string Type { get; set; }
-        public string Description { get; set; }
+        public string ?Description { get; set; }
     }
 }

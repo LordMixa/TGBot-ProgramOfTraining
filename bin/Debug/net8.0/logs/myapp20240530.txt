@@ -1,0 +1,32 @@
+2024-05-30 20:23:30.012 +03:00 [INF] Starting up 30.05.2024 20:23:29
+2024-05-30 20:35:22.929 +03:00 [INF] Starting up 
+2024-05-30 20:35:27.645 +03:00 [INF] User Holy babka snaruzhi list of progs
+2024-05-30 20:35:57.965 +03:00 [INF] Starting up 
+2024-05-30 20:36:12.281 +03:00 [INF] Starting up 
+2024-05-30 20:36:31.502 +03:00 [INF] Starting up 
+2024-05-30 20:36:42.474 +03:00 [INF] Starting up 
+2024-05-30 20:36:58.119 +03:00 [INF] Starting up 
+2024-05-30 20:37:59.478 +03:00 [INF] Starting up 
+2024-05-30 20:40:17.553 +03:00 [INF] Starting up 
+2024-05-30 20:40:28.059 +03:00 [INF] User Holy babka snaruzhi list of progs
+2024-05-30 20:40:28.171 +03:00 [INF] User Holy babka snaruzhi list of progs
+2024-05-30 20:40:36.493 +03:00 [INF] User Holy babka snaruzhi male_menu
+2024-05-30 20:40:40.757 +03:00 [INF] User Holy babka snaruzhi male_start
+2024-05-30 20:40:42.612 +03:00 [INF] User Holy babka snaruzhi unlike program Vitaliy1
+2024-05-30 20:43:59.921 +03:00 [INF] Starting up 
+2024-05-30 20:44:05.629 +03:00 [INF] User Holy babka snaruzhi unlike Vitaliy1
+2024-05-30 20:44:08.811 +03:00 [INF] User Holy babka snaruzhi get program Vitaliy1
+2024-05-30 20:44:09.690 +03:00 [INF] User Holy babka snaruzhi like Vitaliy1
+2024-05-30 20:44:12.417 +03:00 [INF] User Holy babka snaruzhi list of progs
+2024-05-30 20:44:13.803 +03:00 [INF] User Holy babka snaruzhi back_to_main
+2024-05-30 20:44:14.773 +03:00 [INF] User Holy babka snaruzhi top of programs
+2024-05-30 20:44:17.726 +03:00 [INF] User Holy babka snaruzhi products
+2024-05-30 20:44:20.027 +03:00 [INF] User Holy babka snaruzhi liked programs
+2024-05-30 20:45:45.281 +03:00 [INF] Starting up 
+2024-05-30 20:45:51.864 +03:00 [INF] User Holy babka snaruzhi list of progs
+2024-05-30 20:45:53.659 +03:00 [INF] User Holy babka snaruzhi female_menu
+2024-05-30 20:45:54.476 +03:00 [INF] User Holy babka snaruzhi back_to_gender
+2024-05-30 20:48:13.686 +03:00 [INF] Starting up 
+2024-05-30 20:48:20.451 +03:00 [INF] User Holy babka snaruzhi female_menu
+2024-05-30 20:48:23.209 +03:00 [INF] User Holy babka snaruzhi top of programs
+2024-05-30 20:57:27.698 +03:00 [INF] Starting up 
