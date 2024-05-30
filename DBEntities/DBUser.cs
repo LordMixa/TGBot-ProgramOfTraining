@@ -15,7 +15,7 @@ namespace Teleg_training.DBEntities
         public int UserId { get; set; }
         public long TGId { get; set; }
         public string ?Name { get; set; }
-        public ICollection<DBLike> Likes { get; set; }
+        public ICollection<DBLike> ?Likes { get; set; }
 
     }
 }

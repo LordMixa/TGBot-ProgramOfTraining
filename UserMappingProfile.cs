@@ -16,7 +16,6 @@ namespace Teleg_training
             CreateMap<DBProgramList, ModelList>()
                 .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.Author.Name))
                 .ForMember(dest => dest.CodeName, opt => opt.MapFrom(src => $"{src.Author.Name}{src.Author.ProgramLists.ToList().IndexOf(src)}"))
-                //.ForMember(dest => dest.CodeName, opt => opt.MapFrom(src => $"{src.Author.Name}-{src.ProgramId}"))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Difficult, opt => opt.MapFrom(src => src.Difficult))
                 .ForMember(dest => dest.Likes, opt => opt.MapFrom(src => src.Likes.Count))

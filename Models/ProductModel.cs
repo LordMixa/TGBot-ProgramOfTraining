@@ -8,13 +8,13 @@ namespace Teleg_training.Models
 {
     public class ProductModel : IModel
     {
-        public string Name { get; set; }
+        public required string Name { get; set; }
         public double Calories { get; set; }
         public double Proteins { get; set; }
         public double Fats { get; set; }
         public double Carbohydrates { get; set; }
-        public string Type { get; set; }
-        public string Description { get; set; }
+        public string ?Type { get; set; }
+        public required string Description { get; set; }
 
     }
 }

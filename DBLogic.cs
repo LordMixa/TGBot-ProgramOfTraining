@@ -41,10 +41,7 @@ namespace Teleg_training
                 List<DBUser> dBUsers = userRepository.GetAll().ToList();
 
                 List<ModelList> listprog = mapper.Map<List<ModelList>>(dBProgramLists);
-                //for (int i = 0; i < dBProgramLists.Count; i++)
-                //{
-                //    dBProgramLists[i].Author = dBauthors.Find(x => x.AuthorId == dBProgramLists[i].AuthorId);
-                //}
+
                 List<DBProduct> dBProducts = prodRepository.GetAll().ToList();
                 List<ProductModel> listprod = mapper.Map<List<ProductModel>>(dBProducts);
                 return (listprog, listprod);
@@ -97,29 +94,31 @@ namespace Teleg_training
                 List<DBUser> dBUsers = await userRepository.GetAllAsync();
 
                 List<DBLike> likes = await likeRepository.GetAllAsync();
-                DBProgramList? prog = await progRepository.GetbyNameAsync(model.Name);
-                DBUser? dBUser = await userRepository.GetByTGIdAsync(userId);
-
-                var existingLike = likes.FirstOrDefault(l => l.TGId == userId && l.ProgramListId == prog.ProgramId);
-                if (existingLike != null)
+                DBProgramList ?prog = await progRepository.GetbyNameAsync(model.Name);
+                DBUser ?dBUser = await userRepository.GetByTGIdAsync(userId);
+                if (prog != null && dBUser != null)
                 {
-                    await likeRepository.DeleteAsync(existingLike.LikeId);
-                    await unitOfWork.SaveAsync();
-                    return "unlike";
-                }
-                else
-                {
-                    DBLike like = new DBLike
+                    var existingLike = likes.FirstOrDefault(l => l.TGId == userId && l.ProgramListId == prog.ProgramId);
+                    if (existingLike != null)
                     {
-                        TGId = dBUser.TGId,
-                        ProgramListId = prog.ProgramId,
-                        User = dBUser,
-                        ProgramList = prog
-                    };
-                    await likeRepository.CreateAsync(like);
-                    await unitOfWork.SaveAsync();
-                    return "like";
-                }
+                        await likeRepository.DeleteAsync(existingLike.LikeId);
+                        await unitOfWork.SaveAsync();
+                        return "unlike";
+                    }
+                    else
+                    {
+                        DBLike like = new DBLike
+                        {
+                            TGId = dBUser.TGId,
+                            ProgramListId = prog.ProgramId,
+                            User = dBUser,
+                            ProgramList = prog
+                        };
+                        await likeRepository.CreateAsync(like);
+                        await unitOfWork.SaveAsync();
+                        return "like";
+                    }
+                }return "Error";
             }
         }
         public string GetInfoLikeProgram(ModelList model, long userId)
@@ -130,13 +129,18 @@ namespace Teleg_training
                 var userRepository = new UserRepository(unitOfWork);
                 var likeRepository = new LikeRepository(unitOfWork);
                 List<DBLike> likes = likeRepository.GetAll().ToList();
-                DBProgramList prog = progRepository.GetbyName(model.Name);
-                var existingLike = likes.FirstOrDefault(l => l.TGId == userId && l.ProgramListId == prog.ProgramId);
-                DBUser dBUser = userRepository.GetbyTGId(userId);
-                if (existingLike != null)
-                    return "unlike";
+                DBProgramList ?prog = progRepository.GetbyName(model.Name);
+                if (prog != null )
+                {
+                    var existingLike = likes.FirstOrDefault(l => l.TGId == userId && l.ProgramListId == prog.ProgramId);
+                    DBUser dBUser = userRepository.GetbyTGId(userId);
+                    if (existingLike != null)
+                        return "unlike";
+                    else
+                        return "like";
+                }
                 else
-                    return "like";
+                    return "Error";
             }
         }
         public bool GetInfoUserExist(long userid)

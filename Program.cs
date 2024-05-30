@@ -15,11 +15,6 @@ namespace Teleg_training
     internal class Program
     {
         static DBLogic? dBLogic;
-        //static List<ModelList>? programlist;
-        //static List<ProductModel>? productlist;
-        //static string lastprog = "";
-        //static bool _firstrun;
-        //private static readonly TimeSpan UpdateInterval = TimeSpan.FromMinutes(1); // Интервал обновления данных
         static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
@@ -40,19 +35,11 @@ namespace Teleg_training
             .AddDbContext<ProgramListContext>()
             .AddAutoMapper(typeof(UserMappingProfile))
             .BuildServiceProvider();
-            //_firstrun = true;
             dBLogic = new DBLogic();
-            //if (_firstrun)
-            //{
-            //    UpdateData();
-            //    _firstrun = false;
-            //}
-            //var firstUpdateDelay = TimeSpan.FromMinutes(1);
 
-            //var timer = new Timer(async _ => await UpdateDataAsync(), null, firstUpdateDelay, UpdateInterval);
             botClient.StartReceiving(
                 updateHandler: Update,
-                pollingErrorHandler: HandleErrorAsync/*Error*/,
+                pollingErrorHandler: HandleErrorAsync,
                 receiverOptions: receiverOptions,
                 cancellationToken: cts.Token
             );
@@ -65,7 +52,7 @@ namespace Teleg_training
         {
             if (update.Message is not { } message)
             {
-                if (update.CallbackQuery?.Data != null)
+                if (update.CallbackQuery?.Data != null && update.CallbackQuery.Message != null)
                 {
                     if (update.CallbackQuery?.Data == "male_menu")
                     {
@@ -74,7 +61,6 @@ namespace Teleg_training
                         text: "Choose your level",
                         replyMarkup: GetButtonsListProgMaleLevel(),
                         cancellationToken: token);
-                        //await client.AnswerCallbackQueryAsync(update.CallbackQuery.Id);
                         await client.EditMessageReplyMarkupAsync(
                         chatId: update.CallbackQuery.Message.Chat.Id,
                         messageId: update.CallbackQuery.Message.MessageId,
@@ -91,7 +77,6 @@ namespace Teleg_training
                         text: "Choose your level",
                         replyMarkup: GetButtonsListProgFemaleLevel(),
                         cancellationToken: token);
-                        //await client.AnswerCallbackQueryAsync(update.CallbackQuery.Id);
                         await client.EditMessageReplyMarkupAsync(
                         chatId: update.CallbackQuery.Message.Chat.Id,
                         messageId: update.CallbackQuery.Message.MessageId,
@@ -109,7 +94,6 @@ namespace Teleg_training
                         text: "Menu",
                         replyMarkup: GetButtonsMain(),
                         cancellationToken: token);
-                        //await client.AnswerCallbackQueryAsync(update.CallbackQuery.Id);
                         await client.EditMessageReplyMarkupAsync(
                         chatId: update.CallbackQuery.Message.Chat.Id,
                         messageId: update.CallbackQuery.Message.MessageId,
@@ -128,7 +112,6 @@ namespace Teleg_training
                         text: "Choose your gender",
                         replyMarkup: GetButtonsListProgSex(),
                         cancellationToken: token);
-                        //await client.AnswerCallbackQueryAsync(update.CallbackQuery.Id);
                         await client.EditMessageReplyMarkupAsync(
                         chatId: update.CallbackQuery.Message.Chat.Id,
                         messageId: update.CallbackQuery.Message.MessageId,
@@ -140,100 +123,88 @@ namespace Teleg_training
 
                         return;
                     }
-                    else if (update.CallbackQuery?.Data == "male_start")
+                    else if (update.CallbackQuery?.Data == "male_start" && dBLogic != null)
                     {
                         string progs = dBLogic.GetStringListOfPrograms("male", "start");
                         Message sentMessage = await client.SendTextMessageAsync(
                         chatId: update.CallbackQuery.From.Id,
                         text: progs,
                         cancellationToken: token);
-                        //await client.AnswerCallbackQueryAsync(update.CallbackQuery.Id);
                         await client.DeleteMessageAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId);
                         Log.Information($"User {update.CallbackQuery.From.FirstName} male_start");
 
                         return;
                     }
-                    else if (update.CallbackQuery?.Data == "male_mid")
+                    else if (update.CallbackQuery?.Data == "male_mid" && dBLogic != null)
                     {
                         string progs = dBLogic.GetStringListOfPrograms("male", "mid");
                         Message sentMessage = await client.SendTextMessageAsync(
                         chatId: update.CallbackQuery.From.Id,
                         text: progs,
                         cancellationToken: token);
-                        //await client.AnswerCallbackQueryAsync(update.CallbackQuery.Id);
                         await client.DeleteMessageAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId);
                         Log.Information($"User {update.CallbackQuery.From.FirstName} male_mid");
 
                         return;
                     }
-                    else if (update.CallbackQuery?.Data == "male_pro")
+                    else if (update.CallbackQuery?.Data == "male_pro" && dBLogic != null)
                     {
                         string progs = dBLogic.GetStringListOfPrograms("male", "pro");
                         Message sentMessage = await client.SendTextMessageAsync(
                         chatId: update.CallbackQuery.From.Id,
                         text: progs,
                         cancellationToken: token);
-                        //await client.AnswerCallbackQueryAsync(update.CallbackQuery.Id);
                         await client.DeleteMessageAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId);
                         Log.Information($"User {update.CallbackQuery.From.FirstName} male_pro");
 
                         return;
                     }
-                    else if (update.CallbackQuery?.Data == "female_start")
+                    else if (update.CallbackQuery?.Data == "female_start" && dBLogic != null)
                     {
                         string progs = dBLogic.GetStringListOfPrograms("female", "start");
                         Message sentMessage = await client.SendTextMessageAsync(
                         chatId: update.CallbackQuery.From.Id,
                         text: progs,
                         cancellationToken: token);
-                        //await client.AnswerCallbackQueryAsync(update.CallbackQuery.Id);
                         await client.DeleteMessageAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId);
                         Log.Information($"User {update.CallbackQuery.From.FirstName} female_start");
 
                         return;
                     }
-                    else if (update.CallbackQuery?.Data == "female_mid")
+                    else if (update.CallbackQuery?.Data == "female_mid" && dBLogic != null)
                     {
                         string progs = dBLogic.GetStringListOfPrograms("female", "mid");
                         Message sentMessage = await client.SendTextMessageAsync(
                         chatId: update.CallbackQuery.From.Id,
                         text: progs,
                         cancellationToken: token);
-                        //await client.AnswerCallbackQueryAsync(update.CallbackQuery.Id);
                         await client.DeleteMessageAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId);
                         Log.Information($"User {update.CallbackQuery.From.FirstName} female_mid");
 
                         return;
                     }
-                    else if (update.CallbackQuery?.Data == "female_pro")
+                    else if (update.CallbackQuery?.Data == "female_pro" && dBLogic != null)
                     {
                         string progs = dBLogic.GetStringListOfPrograms("female", "pro");
                         Message sentMessage = await client.SendTextMessageAsync(
                         chatId: update.CallbackQuery.From.Id,
                         text: progs,
                         cancellationToken: token);
-                        //await client.AnswerCallbackQueryAsync(update.CallbackQuery.Id);
                         await client.DeleteMessageAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId);
                         Log.Information($"User {update.CallbackQuery.From.FirstName} female_pro");
 
                         return;
                     }
-                    else if (update.CallbackQuery?.Data == "like")
+                    else if (update.CallbackQuery?.Data == "like" && update.CallbackQuery.Message.Text != null && dBLogic != null)
                     {
                         string[] lines = update.CallbackQuery.Message.Text.Split('\n');
                         string firstLine = lines[0];
                         ModelList model = dBLogic.GetProgram('\\' + firstLine);
                         string infolike = await dBLogic.LikeProgram(model, update.CallbackQuery.From.Id);
-                        if(infolike=="like")
+                        if (infolike == "like")
                             Log.Information($"User {update.CallbackQuery.From.FirstName} like {model.CodeName}");
                         else
                             Log.Information($"User {update.CallbackQuery.From.FirstName} unlike {model.CodeName}");
-                        //await UpdateDataAsync();
-                        //Message sentMessage = await client.SendTextMessageAsync(
-                        //chatId: update.CallbackQuery.From.Id,
-                        //text: "♡",
-                        //cancellationToken: token);
-                        //await client.AnswerCallbackQueryAsync(update.CallbackQuery.Id);
                         await client.DeleteMessageAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId);
 
                         return;
@@ -245,21 +216,24 @@ namespace Teleg_training
                 return;
             if (messageText.ToLower() == "/help" || messageText.ToLower() == "/start")
             {
-                if (!dBLogic.GetInfoUserExist(message.From.Id))
+                if (message != null && dBLogic != null && message.From != null && message.From.Username != null)
                 {
-                    dBLogic.AddUser(message.From.Id, message.From.Username);
-                    Log.Information($"New User {update.Message.Chat.Username} {message.From.Id} added on DB");
-                }
-                Message sentMessage = await client.SendTextMessageAsync(
-                chatId: message.Chat.Id,
-                text: "Help commands",
-                replyMarkup: GetButtonsMain(),
-                cancellationToken: token);
-                Log.Information($"User {update.Message.Chat.Username} help");
+                    if (!dBLogic.GetInfoUserExist(message.From.Id))
+                    {
+                        dBLogic.AddUser(message.From.Id, message.From.Username);
+                        Log.Information($"New User {update.Message.Chat.Username} {message.From.Id} added on DB");
+                    }
+                    Message sentMessage = await client.SendTextMessageAsync(
+                    chatId: message.Chat.Id,
+                    text: "Help commands",
+                    replyMarkup: GetButtonsMain(),
+                    cancellationToken: token);
+                    Log.Information($"User {update.Message.Chat.Username} help");
 
-                return;
+                    return;
+                }
             }
-            if (messageText.ToLower() == "info")
+            if (messageText.ToLower() == "info" && message != null && message.From != null)
             {
                 Message sentMessage = await client.SendTextMessageAsync(
                 chatId: message.Chat.Id,
@@ -270,7 +244,7 @@ namespace Teleg_training
 
                 return;
             }
-            if (messageText.ToLower() == "list of programs")
+            if (messageText.ToLower() == "list of programs" && message != null && message.From != null)
             {
                 Message sentMessage = await client.SendTextMessageAsync(
                 chatId: message.Chat.Id,
@@ -280,7 +254,7 @@ namespace Teleg_training
                 Log.Information($"User {message.From.FirstName} list of progs");
                 return;
             }
-            if (messageText.ToLower() == "top of programs")
+            if (messageText.ToLower() == "top of programs" && message != null && message.From != null && dBLogic != null)
             {
                 string progs = dBLogic.GetTop();
                 Message sentMessage = await client.SendTextMessageAsync(
@@ -292,7 +266,7 @@ namespace Teleg_training
 
                 return;
             }
-            if (messageText.ToLower() == "products")
+            if (messageText.ToLower() == "products" && message != null && message.From != null && dBLogic != null)
             {
                 string prod = dBLogic.GetProducts();
                 Message sentMessage = await client.SendTextMessageAsync(
@@ -304,7 +278,7 @@ namespace Teleg_training
 
                 return;
             }
-            if (messageText.ToLower() == "liked programs")
+            if (messageText.ToLower() == "liked programs" && message != null && message.From != null && update != null && update.Message != null && update.Message.From != null && dBLogic != null)
             {
                 string progs = dBLogic.GetLikedLists(update.Message.From.Id);
 
@@ -317,31 +291,11 @@ namespace Teleg_training
 
                 return;
             }
-            //if (messageText.ToLower() == "male")
-            //{
-            //    Message sentMessage = await client.SendTextMessageAsync(
-            //    chatId: message.Chat.Id,
-            //    text: "Choose your level",
-            //    replyMarkup: GetButtonsListProgMaleLevel(),
-            //    cancellationToken: token);
-            //    Log.Information($"User {message.From.FirstName} male");
-
-            //    return;
-            //}
-            //if (messageText.ToLower() == "female")
-            //{
-            //    Message sentMessage = await client.SendTextMessageAsync(
-            //    chatId: message.Chat.Id,
-            //    text: "Choose your level",
-            //    replyMarkup: GetButtonsListProgFemaleLevel(),
-            //    cancellationToken: token);
-
-            //    return;
-            //}
-            else
+            else if (dBLogic != null)
             {
+
                 ModelList model = dBLogic.GetProgram(messageText);
-                if (model != null)
+                if (model != null && message != null && message.From != null)
                 {
                     if (dBLogic.GetInfoLikeProgram(model, message.From.Id) == "like")
                     {
@@ -366,7 +320,7 @@ namespace Teleg_training
                         return;
                     }
                 }
-                else
+                else if (message != null && message.From != null)
                 {
                     Message sentMessage3 = await client.SendTextMessageAsync(
                     chatId: message.Chat.Id,
@@ -392,15 +346,12 @@ namespace Teleg_training
 
             if (exception is ApiRequestException apiException)
             {
-                // Обрабатываем только определенные типы ошибок
                 switch (apiException.ErrorCode)
                 {
                     case 400:
-                        // Логируем и игнорируем ошибку
                         Log.Warning("Ignoring 400 error");
                         break;
                     default:
-                        // Логируем и продолжаем работу
                         Log.Warning("Unhandled API error");
                         break;
                 }
@@ -408,19 +359,6 @@ namespace Teleg_training
 
             return Task.CompletedTask;
         }
-        //private static Task Error(ITelegramBotClient client, Exception exception, CancellationToken token)
-        //{
-        //    var ErrorMessage = exception switch
-        //    {
-        //        ApiRequestException apiRequestException
-        //            => $"Telegram API Error:\n[{apiRequestException.ErrorCode}]\n{apiRequestException.Message}",
-        //        _ => exception.ToString()
-        //    };
-
-        //    Console.WriteLine(ErrorMessage);
-        //    return Task.CompletedTask;
-        //}
-
         private static IReplyMarkup GetButtonsMain()
         {
             ReplyKeyboardMarkup replyKeyboardMarkup = new(new[]
@@ -521,60 +459,6 @@ namespace Teleg_training
             });
             return inlineKeyboard;
         }
-        //public static async Task UpdateDataAsync()
-        //{
-        //    try
-        //    {
-        //        Console.WriteLine($"Start Data Updating: {DateTime.Now}");
-
-        //        programlist = await dBLogic.GetProgsAsync();
-        //        productlist = await dBLogic.GetProdsAsync();
-
-        //        Console.WriteLine($"Updating Data Ended: {DateTime.Now}");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine($"Error while data-updating: {ex.Message}");
-        //    }
-        //}
-        //public static void UpdateData()
-        //{
-        //    try
-        //    {
-        //        Console.WriteLine($"Start Data Updating: {DateTime.Now}");
-
-        //        var (_programlist, _productlist) = dBLogic.GetLists();
-        //        programlist = _programlist;
-        //        productlist = _productlist;
-
-        //        Console.WriteLine($"Updating Data Ended: {DateTime.Now}");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine($"Error while data-updating: {ex.Message}");
-        //    }
-        //}
-        //public static string ProgramString(string gender, string mode, string progs)
-        //{
-        //    if (programlist != null && programlist.Count > 0)
-        //    {
-        //        int count = 0;
-        //        for (int i = 0; i < programlist.Count; i++)
-        //        {
-        //            if (programlist[i].Gender == gender && programlist[i].Mode == mode)
-        //            {
-        //                count++;
-        //                int j = i + 1;
-        //                progs += $"\n{j}: {programlist[i].Name}. Author: {programlist[i].Author}. Difficult: {programlist[i].Difficult.ToString()}★. Description: {programlist[i].Description}. Count of likes: {programlist[i].Likes}❤. Program: /{programlist[i].CodeName}";
-        //            }
-        //        }
-        //        if (count == 0)
-        //            progs = "No programs yet";
-        //        return progs;
-        //    }else
-        //        progs = "No programs yet";
-        //    return progs;
-        //}
     }
 }
 

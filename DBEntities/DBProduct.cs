@@ -14,12 +14,12 @@ namespace Teleg_training.DBEntities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProductId { get; set; }
         [Required]
-        public string Name { get; set; }
+        public required string Name { get; set; }
         public double Calories { get; set; }
         public double Proteins { get; set; }
         public double Fats { get; set; }
         public double Carbohydrates { get; set; }
-        public string Type { get; set; }
+        public string ?Type { get; set; }
         public string ?Description { get; set; }
     }
 }

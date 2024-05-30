@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Teleg_training")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+47a131aec2fb62e6c79e768470e7e8f90cbdff5d")]
 [assembly: System.Reflection.AssemblyProductAttribute("Teleg_training")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Teleg_training")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

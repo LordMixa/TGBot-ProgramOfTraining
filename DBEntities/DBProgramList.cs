@@ -19,14 +19,14 @@ namespace Teleg_training.DBEntities
         public int AuthorId { get; set; }
         public DBAuthor Author { get; set; } = null!;
         [Required]
-        public string Name { get; set; }
+        public required string Name { get; set; }
         [Range(0, 5)]
         public double Difficult { get; set; }
         public string ?Description { get; set; }
         public string ?Program { get; set; }
         public string ?Gender { get; set; }
         public string ?Mode { get; set; }
-        public ICollection<DBLike> Likes { get; set; }
+        public ICollection<DBLike> ?Likes { get; set; }
 
     }
 }

@@ -2,3 +2,14 @@
 2024-05-30 20:58:52.009 +03:00 [INF] Starting up 
 2024-05-30 20:59:01.323 +03:00 [INF] User Holy babka snaruzhi top of programs
 2024-05-30 20:59:02.810 +03:00 [INF] User Holy babka snaruzhi products
+2024-05-30 22:27:26.302 +03:00 [INF] Starting up 
+2024-05-30 22:30:33.718 +03:00 [INF] User Holy babka snaruzhi list of progs
+2024-05-30 22:30:34.793 +03:00 [INF] User Holy babka snaruzhi female_menu
+2024-05-30 22:30:38.276 +03:00 [INF] User Holy babka snaruzhi female_pro
+2024-05-30 22:30:39.614 +03:00 [INF] User Holy babka snaruzhi get program KEverson0
+2024-05-30 22:30:41.349 +03:00 [INF] User Holy babka snaruzhi unlike KEverson0
+2024-05-30 22:30:42.742 +03:00 [INF] User Holy babka snaruzhi get program KEverson0
+2024-05-30 22:30:43.740 +03:00 [INF] User Holy babka snaruzhi like KEverson0
+2024-05-30 22:30:45.905 +03:00 [INF] User Holy babka snaruzhi info
+2024-05-30 22:30:48.285 +03:00 [INF] User Holy babka snaruzhi products
+2024-05-30 22:32:13.018 +03:00 [INF] User Holy babka snaruzhi liked programs
