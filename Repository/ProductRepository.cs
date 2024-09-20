@@ -8,15 +8,14 @@ using Teleg_training.DBEntities;
 
 namespace Teleg_training.Repository
 {
-    internal class ProductRepository : IRepository<DBProduct>, IDisposable
+    internal class ProductRepository : IRepository<DBProduct>
     {
+        public readonly UnitOfWork _unitOfWork;
         public readonly DbSet<DBProduct> _productSet;
-        private ProgramListContext _context;
-        private bool disposed = false;
-        public ProductRepository(ProgramListContext programListContext)
+        public ProductRepository(UnitOfWork unitOfWork)
         {
-            _context = programListContext;
-            _productSet = programListContext.Products;
+            _unitOfWork = unitOfWork;
+            _productSet = _unitOfWork.Context.Set<DBProduct>();
         }
         public void Create(DBProduct item)
         {
@@ -28,25 +27,7 @@ namespace Teleg_training.Repository
             throw new NotImplementedException();
         }
 
-        public virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    _context.Dispose();
-                }
-                this.disposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        public DBProduct Get(int id)
+        public DBProduct? Get(int id)
         {
             return _productSet.Find(id);
         }
@@ -55,8 +36,11 @@ namespace Teleg_training.Repository
         {
             return _productSet;
         }
-
-        public void Update(int id, DBProduct item)
+        public async Task<List<DBProduct>> GetAllAsync()
+        {
+            return await _productSet.ToListAsync();
+        }
+        public void Update( DBProduct item)
         {
             throw new NotImplementedException();
         }

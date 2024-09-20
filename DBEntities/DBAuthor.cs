@@ -15,7 +15,7 @@ namespace Teleg_training.DBEntities
         public int AuthorId { get; set; }
         [Required]
         [MaxLength(30)]
-        public string Name { get; set; }
-        public ICollection<DBProgramList> ProgramLists { get; set; }
+        public required string Name { get; set; }
+        public ICollection<DBProgramList> ?ProgramLists { get; set; }
     }
 }

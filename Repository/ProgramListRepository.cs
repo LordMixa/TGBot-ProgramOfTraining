@@ -8,18 +8,14 @@ using Teleg_training.DBEntities;
 
 namespace Teleg_training.Repository
 {
-    internal class ProgramListRepository : IRepository<DBProgramList>, IDisposable
+    internal class ProgramListRepository : IRepository<DBProgramList>
     {
+        public readonly UnitOfWork _unitOfWork;
         public readonly DbSet<DBProgramList> _programListSet;
-        private ProgramListContext _context;
-        private bool disposed = false;
-        public ProgramListRepository(ProgramListContext context)
+        public ProgramListRepository(UnitOfWork unitOfWork)
         {
-            //var optionsBuilder = new DbContextOptionsBuilder<ProgramListContext>();
-            //optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TGBotProgram;Trusted_Connection=True;");
-            //var dbContextOptions = optionsBuilder.Options;
-            _context = context;
-            _programListSet = _context.ProgramLists;
+            _unitOfWork = unitOfWork;
+            _programListSet = _unitOfWork.Context.Set<DBProgramList>();
         }
         public void Create(DBProgramList item)
         {
@@ -31,11 +27,11 @@ namespace Teleg_training.Repository
             throw new NotImplementedException();
         }
 
-        public DBProgramList Get(int id)
+        public DBProgramList? Get(int id)
         {
             return _programListSet.Find(id);
         }
-        public DBProgramList GetbyName(string Name)
+        public DBProgramList? GetbyName(string Name)
         {
             return _programListSet.Where(p => p.Name == Name).FirstOrDefault();
         }
@@ -44,27 +40,18 @@ namespace Teleg_training.Repository
             return _programListSet;
         }
 
-        public void Update(int id, DBProgramList item)
+        public void Update( DBProgramList item)
         {
             _programListSet.Update(item);
-            _context.SaveChanges();
         }
-        public virtual void Dispose(bool disposing)
+        public async Task<DBProgramList?> GetbyNameAsync(string name)
         {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    _context.Dispose();
-                }
-                this.disposed = true;
-            }
+            return await _programListSet.Where(p => p.Name == name).FirstOrDefaultAsync();
+        }
+        public async Task<List<DBProgramList>> GetAllAsync()
+        {
+            return await _programListSet.ToListAsync();
         }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
     }
 }
